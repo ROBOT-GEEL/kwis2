@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Quiz Interface</title>
+
+        <!-- Meta Tags -->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="UTF-8">
+
+        <!-- Favicon -->
+        <link rel="icon" image="image/x-icon" href="./assets/favicon.ico">
+
+        <!-- Co Headline Font Family -->
+        <link href="https://fonts.cdnfonts.com/css/co-headline" rel="stylesheet">
+
+        <!-- Open Sans Font Family -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wdth,wght@0,75..100,300..800;1,75..100,300..800&display=swap" rel="stylesheet">
+
+        <!-- CSS -->
+        <link rel="stylesheet" href="./style.css">
+
+        <!-- Get exposed client bundle from server for Socket.IO -->
+        <script src="socket.io/socket.io.js"></script>
+
+        <!-- Frontend Javascript -->
+        <script defer src="./script.js"></script>
+
+        <!-- TextFit Library -->
+        <script src="assets/scripts/textFit.min.js"></script>
+    </head>
+
+    <body>
+        <!-- Debug overlay -->
+        <div id="debug-overlay" style="display:none;">
+            <div id="debug-overlay-content">
+                <h1>Debug Overlay</h1>
+                <div id="debug-overlay-sections">
+                    <div class="debug-overlay-section">
+                        <h2>Screens</h2>
+                        <div id="debug-overlay-section-buttons">
+                            <button id="debug-start-btn">Start</button>
+                            <button id="debug-follow-robot-btn">Follow Robot</button>
+                            <button id="debug-quiz-instr-btn">Quiz Instr.</button>
+                            <button id="debug-quiz-btn">Quiz</button>
+                            <button id="debug-quiz-results-btn">Quiz Results</button>
+                            <button id="debug-robot-startup-screen">Startup</button>
+                            <button id="debug-robot-explore-screen">Exploring</button>
+                            <button id="debug-robot-visitor-screen">Visitor</button>
+                        </div>
+                    </div>
+                    <div class="debug-overlay-section">
+                        <h2>Socket</h2>
+                        <div id="debug-overlay-section-buttons">
+                            <button id="debug-count">Count</button>
+                        </div>
+                    </div>
+                    <div class="debug-overlay-section">
+                        <h2>Extra</h2>
+                        <div id="debug-overlay-section-buttons">
+                            <button id="debug-hide">Hide debug</button>
+                            <button id="debug-error">Show error</button>
+                            <button id="debug-display-on">Display on</button>
+                            <button id="debug-display-off">Display off</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Show/Hide Debug Overlay Button -->
+        <button id="debug-overlay-button" style="display:none;">Debug</button>
+
+        <!-- Error Message -->
+        <dialog id="error">
+            <h1 data-lang-key="ERROR_TITLE">Er is een onverwachte fout opgetreden!</h1>
+            <p data-lang-key="ERROR_MESSAGE" id="error-message">ERROR_MESSAGE</p>
+            <br>
+            <button data-lang-key="ERROR_CLOSE" id="error-close">Terug naar het startscherm</button>
+        </dialog>
+
+        <!-- Robot Platform Start-up Screen -->
+        <div id="robot-startup-screen" class="screen" style="display:block;">
+            <div id="robot-startup-screen-content">
+                <h1>Halloo<span class="highlight">!</span></h1>
+                <br>
+                <p>De robot is aan het opstarten en zal zo meteen vertrekken!</p>
+            </div>
+        </div>
+
+        <!-- Robot Platform Exploring Screen -->
+        <div id="robot-explore-screen" class="screen" style="display:none;">
+            <div id="robot-explore-screen-content">
+                <h1 data-lang-key="EXPLORING">EXPLORING</h1>
+                <img src="./assets/exploring.gif" />
+            </div>
+        </div>
+
+        <!-- Robot Platform Going to Visitor Screen -->
+        <div id="robot-go-to-visitors-screen" class="screen" style="display:none;">
+            <div id="robot-go-to-visitor-screen-content">
+                <h1 data-lang-key="GO_TO_VISITOR_HEADER">GO_TO_VISITOR_HEADER</h1>
+                <p data-lang-key="GO_TO_VISITOR_DESCRIPTION">GO_TO_VISITOR_DESCRIPTION</p>
+                <img src="./assets/waving.gif" />
+            </div>
+        </div>
+
+        <!-- Start Screen -->
+        <div id="start-screen" class="screen" style="display:none;">
+            <!-- Description of the Quiz Robot -->
+            <div class="info-card">
+                <h1>Robotoo</h1>
+                <p data-lang-key="START_SCREEN_CARD_DESCRIPTION" id="info-card-description">START_SCREEN_CARD_DESCRIPTION</p>
+                <img src="./assets/test.svg" height="500" width="500" />
+            </div>
+
+            <!-- Tabloo Logo -->
+            <div class="tabloo-logo-container">
+                <img src="./assets/tabloo_logo_groen.png" />
+            </div>
+
+            <!-- Start Button -->
+            <div class="start-button-container">
+                <button data-lang-key="START_SCREEN_START_BUTTON" id="play-quiz-button">START_SCREEN_START_BUTTON</button>
+            </div>
+        </div>
+
+        <!-- Modal to ask if the participants have visited the Expoo -->
+        <div id="visited-expoo-modal" class="modal" style="display:none;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 data-lang-key="VISITED_EXPOO_MODAL_HEADER">VISITED_EXPOO_MODAL_HEADER</h2>
+                    <button class="close" id="close-modal-btn">&times;</button>
+                </div>
+                <div class="modal-buttons">
+                    <button data-lang-key="VISITED_EXPOO_MODAL_YES" id="visited-expoo-yes">VISITED_EXPOO_MODAL_YES</button>
+                    <button data-lang-key="VISITED_EXPOO_MODAL_NO" id="visited-expoo-no">VISITED_EXPOO_MODAL_NO</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Follow Robot Screen -->
+        <div id="follow-robot-screen" class="screen" style="display:none;">
+            <div class="follow-robot-screen-container">
+                <h1 data-lang-key="FOLLOW_SCREEN_TEXT">FOLLOW_SCREEN_TEXT</h1>
+            </div>
+        </div>
+
+        <!-- Quiz Instructions Screen -->
+        <div id="quiz-instructions-screen" class="screen" style="display:none;">
+            <div class="quiz-instructions-screen-container">
+                <div id="instructions-header" class="instruction-header-big">
+                    <h1 data-lang-key="INSTRUCTIONS_HEADER">Instructies van de quiz</h1>
+                </div>
+                <div id="instruction-container" class="instruction-container-invisible">
+                    <div id="instruction-text">
+                        
+                    </div>
+                    <div id="instruction-image-container">
+                        <img id="instruction-image" src="./assets/transparent.png" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quiz Screen -->
+        <div id="quiz-screen" class="screen" style="display:none;">
+            <div class="quiz-screen-container">
+                <!-- Question section of the quiz screen -->
+                <div class="question-container" data-lang-key="QUIZ_SCREEN_QUESTION" id="quiz-question">
+                    QUIZ_SCREEN_QUESTION
+                </div>
+                <!-- Answer section of the quiz screen -->
+                <div class="answers-container">
+                    <!-- There are 3 answer rows, each containing an answer label and the answer itself -->
+                    <!-- Answer A -->
+                    <div class="answer-row" id="quiz-answerA-container">
+                        <!-- Answer label -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="300" height="200" viewBox="0 0 150 100" class="answer-label">
+                            <circle fill="currentColor" r="50" cx="50" cy="50" />
+                            <line x1="50" y1="50" x2="150" y2="50" style="stroke:currentColor;stroke-width:10" />
+                            <text x="50" y="52" fill="white" font-size="65" dominant-baseline="middle" text-anchor="middle">A</text>
+                        </svg>
+                        <!-- Answer text -->
+                        <div class="answer-container">
+                            <div class="answer" id="quiz-answer-0">
+                                Tekst antwoord A
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Answer B -->
+                    <div class="answer-row" id="quiz-answerB-container">
+                        <!-- Answer label -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="300" height="200" viewBox="0 0 150 100" class="answer-label">
+                            <circle fill="currentColor" r="50" cx="50" cy="50" />
+                            <line x1="50" y1="50" x2="150" y2="50" style="stroke:currentColor;stroke-width:10" />
+                            <text x="50" y="55" fill="white" font-size="65" dominant-baseline="middle" text-anchor="middle">B</text>
+                        </svg>
+                        <!-- Answer text -->
+                        <div class="answer-container">
+                            <div class="answer" id="quiz-answer-1">
+                                Tekst antwoord B
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Answer C -->
+                    <div class="answer-row" id="quiz-answerC-container">
+                        <!-- Answer label -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="300" height="200" viewBox="0 0 150 100" class="answer-label">
+                            <circle fill="currentColor" r="50" cx="50" cy="50" />
+                            <line x1="50" y1="50" x2="150" y2="50" style="stroke:currentColor;stroke-width:10" />
+                            <text x="46" y="56" fill="white" font-size="65" dominant-baseline="middle" text-anchor="middle">C</text>
+                        </svg>
+                        <!-- Answer text -->
+                        <div class="answer-container">
+                            <div class="answer" id="quiz-answer-2">
+                                Tekst antwoord C
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Footer of the quiz screen, containing the timer and the remaining questions -->
+                <div class="quiz-footer">
+                    <!-- Progress bar to visualize the remaining time -->
+                    <progress id="timer-progress-bar" value="100" max="100"></progress>
+                    <div>
+                        <!-- Timer and remaining questions text -->
+                        <div id="quiz-timer" data-lang-key="QUIZ_SCREEN_TIMER">QUIZ_SCREEN_TIMER</div>
+                        <div id="quiz-remaining-questions" data-lang-key="QUIZ_REMAINING_QUESTIONS">QUIZ_REMAINING_QUESTIONS</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quiz Finished Screen -->
+        <div id="quiz-finished-screen" class="screen" style="display:none;">
+            <div id="quiz-finished-screen-container">
+                <h1 data-lang-key="QUIZ_FINISHED_HEADER">QUIZ_RESULTS_HEADER</h1>
+                <p data-lang-key="QUIZ_FINISHED_DESCRIPTION">QUIZ_RESULTS_DESCRIPTION</p>
+            </div>
+        </div>
+
+        <!-- Language Selection Footer -->
+        <div class="language-selection">
+            <button class="language-selector" id="NL-selector" data-language="NL">NL</button>
+            <button class="language-selector" id="EN-selector" data-language="EN">EN</button>
+            <button class="language-selector" id="FR-selector" data-language="FR">FR</button>
+        </div>
+    </body>
+</html>

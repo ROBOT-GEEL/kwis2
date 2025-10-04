@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Quiz Interface</title>
+        <script src="socket.io/socket.io.js"></script>
+
+        <!-- Meta Tags -->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="UTF-8">
+
+    
+
+
+        <!-- <title>Emphasis on hover</title>
+    <style>
+        em {font-style: normal}
+        .red {color:red}
+    </style>-->
+
+        <!-- Favicon -->
+        <link rel="icon" image="image/x-icon" href="./assets/favicon.ico">
+
+        <!-- Co Headline Font Family -->
+        <link href="https://fonts.cdnfonts.com/css/co-headline" rel="stylesheet">
+
+        <!-- Open Sans Font Family -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wdth,wght@0,75..100,300..800;1,75..100,300..800&display=swap" rel="stylesheet">
+
+        <!-- CSS -->
+        <link rel="stylesheet" href="./navigatiescherm.css">
+
+        <!-- Get exposed client bundle from server for Socket.IO -->
+        <!--<script src="socket.io/socket.io.js"></script> -->
+
+        <!-- Frontend Javascript -->
+        
+
+        <!-- TextFit Library -->
+        
+    </head>
+
+    <body>
+        <div class="quiz">
+            <button onclick="location.href='../'"> back to quiz</button>
+        </div>
+        <div class="stop">
+            <button ontouchstart="driveStop()" ontouchend="driveStop()" onmouseup="driveStop()" onmousedown="driveStop()"onclick="driveStop()"> STOP ROBOT</button>
+
+        </div>
+        <div onclick="location.href='../cms'" class="cms">
+            <button > go cms         </button>
+
+        </div>
+        
+
+        
+        
+        
+            
+                <div class="voor" >
+                    <button ontouchstart="driveForward()" ontouchend="driveStop()" onmouseup="driveStop()" onmousedown="driveForward()">
+
+                        <img src="arrow_up_0.png" />
+                      </button>            
+                </div>
+            
+            <div class="links">
+                <button ontouchstart="driveLeft()"  ontouchend="driveStop()" onmouseup="driveStop()" onmousedown="driveLeft()" >
+
+                    <img src="arrow_left_0.png" />
+                  </button>  
+            </div>
+            <div class="rechts">
+                    <button ontouchstart="driveRight()" ontouchend="driveStop()" onmouseup="driveStop()" onmousedown="driveRight()" >
+                        <img src="arrow_right.png" />
+                      </button>            
+
+            </div>
+            <div class="achter">
+                <button ontouchstart="driveBackward()" ontouchend="driveStop()" onmouseup="driveStop()" onmousedown="driveBackward()">
+                    <img src="arrow_down_0.png" />
+                  </button>            
+            </div>
+        
+        
+
+        <script defer src="./nav.js"></script>
+        <!--<script src="assets/scripts/textFit.min.js"></script>-->
+        
+    </body>
+</html>

@@ -1,0 +1,162 @@
+    :root {
+        --darkGreen: #005144;
+        --darkGreen-hover: #026151;
+    }
+
+    body {
+        min-height: 100%;
+        min-width: auto;
+        background-color: #f1f1f1;
+        font-family: 'Open Sans';
+    }
+
+    .container {
+        /* offset from nav bar */
+        margin-left: 14rem;
+    }
+
+    .divpieChart {
+        display: flex;
+        /* Align items to the start of the container */
+        justify-content: flex-start;
+        /* Vertically center items in the container */
+        align-items: center;
+        flex-wrap: wrap;
+        margin-top: 2rem;
+        margin-bottom: 2rem;
+    }
+
+    .pieChart {
+        width: 50%;
+        max-width: 400px;
+    }
+
+    .chart-legend {
+        height: 250px;
+        overflow: auto;
+    }
+
+    .chart-legend li {
+        /* Align the text to the left */
+        text-align: left;
+    }
+
+    .chart-legend li span {
+        display: inline-block;
+        width: 12px;
+        height: 12px;
+        margin-right: 5px;
+    }
+
+
+    /* overlay styles, all needed */
+    .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 10;
+        /* hide initially */
+        display: none;
+    }
+
+    .modal {
+        width: 75vw;
+        height: 75vh;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: #e6e3d9;
+        border-radius: 5px;
+        text-align: center;
+        /* 1px higher than the overlay layer */
+        z-index: 11;
+        /* hide initially */
+        display: none;
+        padding: 20px;
+    }
+
+    button {
+        background-color: var(--darkGreen);
+        color: #ffffff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-top: 0.2rem;
+    }
+
+    button:hover {
+        background-color: var(--darkGreen-hover);
+    }
+
+    /************** side balk **************/
+    .rectangleSideBalk {
+        background-color: #80c8cc;
+        border-top-right-radius: 1rem;
+        border-bottom-right-radius: 1rem;
+        height: 100vh;
+        left: 0;
+        position: fixed;
+        top: 0;
+        width: 12rem;
+        overflow: hidden;
+    }
+
+    .dashBoardFrame {
+        height: 4rem;
+        position: absolute;
+        top: 1rem;
+        width: 100%;
+    }
+
+    .rectangleDashBoard {
+        background-color: var(--darkGreen);
+        height: 2.4rem;
+        position: absolute;
+        top: 0.8rem;
+        width: 100%;
+    }
+
+    .gaugeIcon {
+        height: 1.3712rem;
+        left: 0.3526rem;
+        position: absolute;
+        top: 1.2105rem;
+        width: 1.8947rem;
+    }
+
+    .dashBoard {
+        font-family: "CO Headline";
+        color: #f1f1f1;
+        display: flex;
+        font-size: 1.4rem;
+        font-weight: 700;
+        height: 1.7rem;
+        left: 2.5rem;
+        line-height: 0.7;
+        position: absolute;
+        top: 1.15rem;
+        white-space: nowrap;
+        width: 7.5rem;
+    }
+
+    .BackButtonDiv {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        border-radius: 0px;
+        height: 4rem;
+    }
+
+    #backButton {
+        height: 100%;
+        width: 100%;
+        font-family: "CO Headline";
+        font-size: 0.9rem;
+        font-weight: 500;
+    }

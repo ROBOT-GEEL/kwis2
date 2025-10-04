@@ -1,0 +1,369 @@
+:root {
+    --darkGreen: #005144;
+    --darkGreen-hover: #026151;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #f1f1f1;
+}
+
+.rectangleSideBalk {
+    background-color: #80c8cc;
+    border-top-right-radius: 1rem;
+    border-bottom-right-radius: 1rem;
+    height: 100vh;
+    left: 0;
+    position: fixed;
+    top: 0;
+    width: 12rem;
+    overflow: hidden;
+}
+
+.dashBoardFrame {
+    height: 4rem;
+    position: absolute;
+    top: 1rem;
+    width: 100%;
+}
+
+.rectangleDashBoard {
+    background-color: var(--darkGreen);
+    height: 2.4rem;
+    position: absolute;
+    top: 0.8rem;
+    width: 100%;
+}
+
+.gaugeIcon {
+    height: 1.3712rem;
+    left: 0.3526rem;
+    position: absolute;
+    top: 1.2105rem;
+    width: 1.8947rem;
+}
+
+.dashBoard {
+    font-family: "CO Headline";
+    color: #f1f1f1;
+    display: flex;
+    font-size: 1.4rem;
+    font-weight: 700;
+    height: 1.7rem;
+    left: 2.5rem;
+    line-height: 0.7;
+    position: absolute;
+    top: 1.15rem;
+    white-space: nowrap;
+    width: 7.5rem;
+}
+
+.settingsFrame {
+    align-items: center;
+    display: flex;
+    height: 1.55rem;
+    position: absolute;
+    top: 5.25rem;
+    width: 100%;
+}
+
+.settingsFrame:hover .settings {
+    font-size: 1.3rem;
+    cursor: pointer;
+}
+
+.gear {
+    height: 1.4438rem;
+    margin-right: 0.2rem;
+    width: 2.1rem;
+}
+
+.beamerPowerToggle{
+    font-family: "CO Headline";
+    color: var(--darkGreen);
+    display: flex;
+    flex-shrink: 0;
+    font-size: 1.2rem;
+    font-weight: 400;
+    line-height: 1.2125;
+    white-space: nowrap;
+    padding-bottom: 0.4rem;
+    bottom: 7rem;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.beamerPowerToggleDiv {
+    align-items: center;
+    display: flex;
+    height: 1.55rem;
+    position: absolute;
+    top: 13.25rem;
+    width: 100%;
+}
+.beamerPowerToggleDivOn {
+    align-items: center;
+    display: flex;
+    height: 1.55rem;
+    position: absolute;
+    bottom: 5rem;
+    width: 5.2rem;
+    left: 0.6rem;
+}
+.beamerPowerToggleOn{
+    height: 100%;
+    font-family: "CO Headline";
+    font-size: 0.9rem;
+    font-weight: 500;
+    background-color: var(--darkGreen);
+    color: #ffffff;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    line-height: 0;
+    width: 100%;
+}
+.beamerPowerToggleDivOff {
+    align-items: center;
+    display: flex;
+    height: 1.55rem;
+    position: absolute;
+    bottom: 5rem;
+    width: 5.2rem;
+    right: 0.6rem;
+}
+.beamerPowerToggleOff{
+    height: 100%;
+    font-family: "CO Headline";
+    font-size: 0.9rem;
+    font-weight: 500;
+    background-color: var(--darkGreen);
+    color: #ffffff;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    line-height: 0;
+    width: 100%;
+}
+.beamerPowerToggleOn:hover {
+    font-size: 1rem;
+    cursor: pointer;
+    background-color: var(--darkGreen-hover);
+}
+.beamerPowerToggleOff:hover {
+    font-size: 1rem;
+    cursor: pointer;
+    background-color: var(--darkGreen-hover);
+}
+
+.powerIcon {
+    height: 1.4438rem;
+    margin-right: 0.2rem;
+    width: 2.1rem;
+}
+
+.settings {
+    font-family: "CO Headline";
+    color: var(--darkGreen);
+    display: flex;
+    flex-shrink: 0;
+    font-size: 1.2rem;
+    font-weight: 400;
+    line-height: 1.2125;
+    margin-bottom: 0.05rem;
+    white-space: nowrap;
+    padding-bottom: 0.4rem
+}
+
+.settingsLine {
+    background-color: var(--darkGreen);
+    height: 0.1rem;
+    left: 0;
+    position: absolute;
+    top: 12rem;
+    width: 100%;
+}
+
+.body {
+    flex-shrink: 0;
+    margin-top: 1.25rem;
+    width: 100%;
+    width: calc(100% - 12.5rem);
+    max-width: 45rem;
+    margin-left: 13rem;
+}
+
+.vragen {
+    color: #000000;
+    display: flex;
+    font-family: Inter, 'CO Headline';
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 1.2125;
+    margin-bottom: 1rem;
+    white-space: nowrap;
+}
+
+.questionsBody {
+    background-color: #ffffff;
+    border-radius: 0.5rem;
+    box-sizing: border-box;
+    padding: 1rem 1rem 1.2rem 1rem;
+    width: 100%;
+    margin-top: 1rem;
+}
+
+.questionsFrame {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    box-sizing: content-box;
+}
+
+.settingsBodyFrame {
+    gap: 10px;
+    display: flex;
+    margin-bottom: 0.4rem;
+    width: 100%;
+    flex-wrap: wrap;
+}
+.setting {
+    flex: 1 1 calc(50% - 5px);
+    margin-bottom: 10px;
+}
+.setting label {
+    display: block;
+    margin-bottom: 5px;
+    font-family: Inter, 'Open Sans';
+    font-size: 1.2rem;
+    font-weight: 400;
+}
+.setting-input {
+    display: flex;
+    flex-direction: column;
+}
+.buttonSaveSettings {
+    background-color: var(--darkGreen);
+    color: #ffffff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%;
+    margin-top: 0.2rem;
+}
+
+.buttonSaveSettings:hover {
+    background-color: #026958;
+}
+
+
+
+
+
+
+
+
+.BackButtonDiv {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    border-radius: 0px;
+    height: 4rem;
+}
+
+#backButton {
+    height: 100%;
+
+    font-family: "CO Headline";
+    font-size: 0.9rem;
+    font-weight: 500;
+
+    background-color: var(--darkGreen);
+    color: #ffffff;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 0.2rem;
+}
+
+.settingsgreen {
+    color: var(--darkGreen);
+    font-family: Inter, 'Open Sans';
+    font-size: 1rem;
+    font-weight: 800;
+}
+
+.settingsblack {
+    color: black;
+    font-family: Inter, 'Open Sans';
+    font-size: 1rem;
+    font-weight: 400;
+}
+
+#backButton:hover {
+    background-color: var(--darkGreen-hover);
+}
+
+
+    /******************************************* Switch ***************************************** */
+    .cancelInactiveQuizSwitch {
+        position: absolute;
+        display: inline-block;
+        width: 3rem;
+        height: 1.2rem;
+    }
+
+    .cancelInactiveQuizSwitch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
+
+    .slider {
+        display: flex;
+        align-items: center;
+        width: 3rem;
+        height: 1.2rem;
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        -webkit-transition: .4s;
+        transition: .4s;
+        border-radius: 34px;
+    }
+
+    .slider:before {
+        height: 80%;
+        aspect-ratio: 1 / 1;
+        position: absolute;
+        content: "";
+        left: 4px;
+        background-color: white;
+        -webkit-transition: .4s;
+        transition: .4s;
+        border-radius: 50%;
+    }
+
+    input:checked+.slider {
+        background-color: #2196F3;
+    }
+
+    input:focus+.slider {
+        box-shadow: 0 0 1px #2196F3;
+    }
+
+    input:checked+.slider:before {
+        -webkit-transform: translateX(26px);
+        -ms-transform: translateX(26px);
+        transform: translateX(26px);
+    }
