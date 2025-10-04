@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Robotoo dashboard</title>
+
+  <!-- Font for titles -->
+  <link href="https://fonts.cdnfonts.com/css/co-headline" rel="stylesheet">
+  <!-- Open Sans Font -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css">
+
+  <!-- fav icon -->
+  <link rel="icon" type="image/x-icon" href="https://tabloo.com/themes/contrib/rocketship_theme_flex/favicon.ico">
+
+  <link rel="stylesheet" href="grafieken.css">
+  <script src="Chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/emn178/chartjs-plugin-labels/src/chartjs-plugin-labels.js"></script>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
+  <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
+</head>
+
+<body>
+  <script src="grafieken.js"></script>
+  <script src="script.js"></script>
+
+  <!-- Side bar -->
+  <div class="rectangleSideBalk">
+    <div class="dashBoardFrame">
+      <div class="rectangleDashBoard"></div>
+      <img class="gaugeIcon" src="icons\gauge.svg" />
+      <div class="dashBoard">Dashboard</div>
+    </div>
+
+    <div class="BackButtonDiv">
+      <button id="backButton" type="button" onclick="location.href='../grafieken'">← Terug</button>
+    </div>
+
+  </div>
+
+  <div class="container">
+    <div id="infoDiv">
+      <h1>Grafieken</h1>
+      <p>Op deze pagina kunt u de antwoorden van de vragen bekijken.</p>
+    </div>
+
+    <!--div that generated the "dimmed" effect when time series is displayed-->
+    <div id="grapgoverlay" class="overlay"></div>
+    <!--div to hold the time series graph-->
+    <div id="graphmodal" class="modal"></div>
+    <div id="divGrafieken"></div>
+  </div>
+
+</body>
+
+</html>

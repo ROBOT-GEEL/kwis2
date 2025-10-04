@@ -1,0 +1,113 @@
+:root {
+  --language-selection-height: 50px;
+  --screen-height: calc(100vh - var(--language-selection-height));
+  /*background-color: #80c8cc;*/
+  background-color: #80c8cc;;
+  --green-bg-color-dark: #005144;
+  --start-button-bg-color: #1d6b62;
+  font-size: 16px;
+}
+
+
+
+.container {
+  display: grid;
+  grid-template-areas:
+    "header header"
+    "menu content"
+    "footer footer";
+  grid-template-columns: 2fr 3fr;
+  gap: 5px;
+  background-color: #2196F3;
+  padding: 5px;
+}
+.container > div {
+  background-color:rgba(255, 255, 255, 0.8);
+  padding: 10px;
+}
+.container > div.header {
+  grid-area: header;
+  text-align: center;
+}
+.container > div.menu {
+  grid-area: menu;
+}
+.container > div.content {
+  grid-area: content;
+}
+.container > div.footer {
+  grid-area: footer;
+}
+
+
+img {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 5px;
+    width: 100px;
+  }
+
+
+
+button {
+
+    display: flex;
+    
+    font-size: 1em;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding: 10px;
+    background-color: transparent;
+    
+    border-width: 10px;
+    background-color:  #005144;
+    color: rgb(0, 0, 0);
+
+    position: absolute;
+    top: 10%;
+    left: 10%;
+    
+
+    cursor: pointer;
+
+  }
+
+  .voor > button {
+   
+   
+    position: absolute;
+    top: 35%;
+    left: 50%;
+  }
+  .links > button{
+    position: absolute;
+    top: 50%;
+    left: 38%;
+  }
+  .rechts > button{
+    position: absolute;
+    top: 50%;
+    left: 62%;
+  }
+  .achter > button{
+    position: absolute;
+    top: 61%;
+    left: 50%;
+
+  }
+  .stop > button{
+    position: absolute;
+    top: 20%;
+    left: 10%;
+  }
+  .cms > button{
+    position: absolute;
+    top: 30%;
+    left: 10%;
+  }
+  .quiz > button{
+    position: absolute;
+    top: 10%;
+    left: 10%;
+  }
+

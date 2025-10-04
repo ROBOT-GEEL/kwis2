@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Robotoo admin panel</title>
+    <!-- fav icon -->
+    <link rel="icon" type="image/x-icon" href="https://tabloo.com/themes/contrib/rocketship_theme_flex/favicon.ico">
+    <!-- CSS -->
+    <link rel="stylesheet" href="settings.css">
+    <!-- Font for Robotoo -->
+    <link href="https://fonts.cdnfonts.com/css/co-headline" rel="stylesheet">
+
+    <!-- Open Sans Font -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css">
+</head>
+
+
+<body>
+    <div class="rectangleSideBalk">
+        <div class="dashBoardFrame">
+            <div class="rectangleDashBoard"></div>
+            <img class="gaugeIcon" src="icons\gauge.svg" />
+            <div class="dashBoard">Admin panel</div>
+        </div>
+        <div class="settingsFrame" onclick="location.href='../cms'" id="settingsFrame">
+            <img class="gear" src="icons\settings.svg" />
+            <div class="settings">Cms</div>
+        </div>
+        <div class="beamerPowerToggle">Beamer</div>
+        <div class="beamerPowerToggleDivOff">
+            <button id="beamerPowerToggleOff" class="beamerPowerToggleOff" type="button"
+                onclick="toggleProjector('0')">Off</button>
+        </div>
+        <div class="beamerPowerToggleDivOn">
+            <button id="beamerPowerToggleOn" class="beamerPowerToggleOn" type="button"
+                onclick="toggleProjector('1')">On</button>
+        </div>
+
+        <div class="BackButtonDiv">
+            <button id="backButton" type="button" onclick="location.href='../grafieken'">Ga naar dashboard</button>
+        </div>
+    </div>
+
+
+    <div class="body">
+        <div class="vragen" id="title">Instellingen</div>
+        <div class="questionsBody" id="questionsBody">
+            <div class="settingsBodyFrame" id="questionsFrame">
+                <div class="setting">
+                    <label for="answerTime">Answer Time:</label>
+                    <input type="number" id="answerTime">
+                </div>
+                <div class="setting">
+                    <label for="maxQuestions">Max Questions:</label>
+                    <input type="number" id="maxQuestions">
+                </div>
+                <div class="setting">
+                    <label for="nextQuestionDelay">Next Question Delay:</label>
+                    <input type="number" id="nextQuestionDelay">
+                </div>
+                <div class="setting">
+                    <label for="cancelInactiveQuiz">Cancel Inactive Quiz:</label>
+                    <label class="cancelInactiveQuizSwitch">
+                        <input type="checkbox" id="cancelInactiveQuizCheckbox">
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+                <div class="setting">
+                    <label for="instructionsScreenTime">Instructions Screen Time:</label>
+                    <input type="number" id="instructionsScreenTime">
+                </div>
+                <div class="setting">
+                    <label for="finishedScreenTime">Finished Screen Time:</label>
+                    <input type="number" id="finishedScreenTime">
+                </div>
+                <div class="setting">
+                    <label for="timeToStartQuiz">Time To Start Quiz:</label>
+                    <input type="number" id="timeToStartQuiz">
+                </div>
+            </div>
+            <button id="buttonSaveSettings" class="buttonSaveSettings" onclick="buttonSaveSettings()"
+                id="buttonSaveSettings">Opgeslagen</button>
+            <button class="buttonSaveSettings" onclick="retrieveSettings()"
+                id="buttonEnable">Annuleren</button>
+        </div>
+        <div class="questionsBody" id="questionsBody">
+            <p class="settingsblack"><strong class="settingsgreen"> Answer Time: </strong>De tijd die deelnemers krijgen 
+                voor te antwoorden op de gestelde vraag.</p>
+            <p class="settingsblack"><strong class="settingsgreen">Max questions: </strong>Het aantal vragen waaruit een 
+                niet vroegtijdig beëindigde quiz zal bestaan.</p>
+            <p class="settingsblack"><strong class="settingsgreen">Next Question Delay: </strong>De tijd tussen vragen 
+                waarbij het juiste antwoord van de vorige vraag bekeken kan worden.</p>
+            <p class="settingsblack"><strong class="settingsgreen">Cancel Inactive Quiz: </strong>Een booleaanse variabele 
+                die, wanneer hij wordt ingeschakeld, ervoor zorgt dat een quiz vroegtijdig zal worden beëindigd wanneer er 
+                twee opeenvolgende vragen niet worden beantwoord.</p>
+            <p class="settingsblack"><strong class="settingsgreen">Instructions Screen Time: </strong>De tijd die voorzien 
+                wordt voordat de instructies worden weergegeven.</p>
+            <p class="settingsblack"><strong class="settingsgreen">Finished Screen Time: </strong>De tijd dat de 
+                “quiz voltooid”-pagina getoond wordt.</p>
+            <p class="settingsblack"><strong class="settingsgreen">Time To Start Quiz: </strong>De tijd die een bezoeker 
+                krijgt om de quiz te starten vanaf dat de robot bij de bezoeker is aangekomen.</p>
+        </div>
+    </div>
+    </div>
+    <script src="settings.js"></script>
+</body>
+
+</html>
