@@ -155,7 +155,7 @@ app.post('/quiz/questions', async (req, res) => {
 // Get the id for the next quiz
 app.get('/quiz/new-id', async (req, res) => {
     try {
-        const db = client.db("DB_NAME");//////////////////////////////////////////
+        const db = client.db(DB_NAME);//////////////////////////////////////////
         const collection = db.collection("results");
 
         // Get the highest quiz id from the results collection and increment it
@@ -170,7 +170,7 @@ app.get('/quiz/new-id', async (req, res) => {
 // Get the quiz parameters from the database
 app.get('/quiz/parameters', async (req, res) => {
     try {
-        const db = client.db("DB_NAME");/////////////////////////////////////////////////////////////////
+        const db = client.db(DB_NAME);/////////////////////////////////////////////////////////////////
         const collection = db.collection("params");
 
         const parameters = await collection.findOne({});
@@ -189,7 +189,7 @@ app.get('/quiz/instructions', (req, res) => {
 // Get the time to start the quiz before the start screen goes away
 app.get('/quiz/time-to-start', async (req, res) => {
     try {
-        const db = client.db("DB_NAME");///////////////////////////////////////////////////////////////////////
+        const db = client.db(DB_NAME);///////////////////////////////////////////////////////////////////////
         const collection = db.collection("params");
 
         const parameters = await collection.findOne({});
@@ -305,7 +305,7 @@ io.on('connection', (socket) => {
         logger.info('count_people_answer', msg);
         // Save to database
         try {
-            const db = client.db("DB_NAME");/////////////////////////////////////////////////////
+            const db = client.db(DB_NAME);/////////////////////////////////////////////////////
             const collection = db.collection("results");
 
             // Add timestamp in UTC to msg as a Date object
