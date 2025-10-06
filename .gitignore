@@ -1,0 +1,38 @@
+# Node.js standaard
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Milieuvariabelen
+.env
+.env.*
+
+# Editor-specifiek
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+
+# OS-specifiek
+.DS_Store
+Thumbs.db
+
+# Build-output
+dist/
+build/
+coverage/
+
+# TypeScript
+*.tsbuildinfo
+
+# Logs
+logs/
+*.log
+
+# Dependency-locks (optioneel, afhankelijk van je workflow)
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+

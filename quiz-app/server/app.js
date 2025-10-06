@@ -14,6 +14,9 @@ const connectLivereload = require("connect-livereload");
 const liveReloadServer = livereload.createServer();
 liveReloadServer.watch(path.join(__dirname, '..', 'app'));
 
+// Use database name as constant by using ATLAS_DBNAME in .env or else default to just using "LocalRPIdb"
+const DB_NAME = process.env.ATLAS_DBNAME || "LocalRPIdb"
+
 // ping browser on Express boot, once browser has reconnected and handshaken
 liveReloadServer.server.once("connection", () => {
     setTimeout(() => {
@@ -124,7 +127,7 @@ app.post('/quiz/questions', async (req, res) => {
     const amount = req.body.amount;
 
     try {
-        const db = client.db("LocalRPIdb");///////////////////////////tabloo//LocalRPIdb
+        const db = client.db(DB_NAME);///////////////////////////tabloo//LocalRPIdb
         const collection = db.collection("questions");
 
         // Get (amount) random questions from the database
@@ -152,7 +155,7 @@ app.post('/quiz/questions', async (req, res) => {
 // Get the id for the next quiz
 app.get('/quiz/new-id', async (req, res) => {
     try {
-        const db = client.db("LocalRPIdb");//////////////////////////////////////////
+        const db = client.db("DB_NAME");//////////////////////////////////////////
         const collection = db.collection("results");
 
         // Get the highest quiz id from the results collection and increment it
@@ -167,7 +170,7 @@ app.get('/quiz/new-id', async (req, res) => {
 // Get the quiz parameters from the database
 app.get('/quiz/parameters', async (req, res) => {
     try {
-        const db = client.db("LocalRPIdb");/////////////////////////////////////////////////////////////////
+        const db = client.db("DB_NAME");/////////////////////////////////////////////////////////////////
         const collection = db.collection("params");
 
         const parameters = await collection.findOne({});
@@ -186,7 +189,7 @@ app.get('/quiz/instructions', (req, res) => {
 // Get the time to start the quiz before the start screen goes away
 app.get('/quiz/time-to-start', async (req, res) => {
     try {
-        const db = client.db("LocalRPIdb");///////////////////////////////////////////////////////////////////////
+        const db = client.db("DB_NAME");///////////////////////////////////////////////////////////////////////
         const collection = db.collection("params");
 
         const parameters = await collection.findOne({});
@@ -302,7 +305,7 @@ io.on('connection', (socket) => {
         logger.info('count_people_answer', msg);
         // Save to database
         try {
-            const db = client.db("LocalRPIdb");/////////////////////////////////////////////////////
+            const db = client.db("DB_NAME");/////////////////////////////////////////////////////
             const collection = db.collection("results");
 
             // Add timestamp in UTC to msg as a Date object
