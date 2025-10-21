@@ -25,7 +25,7 @@ display.clear_output()
 # Start example
 model = torch.hub.load('ultralytics/yolov5', 'yolov5m6')
 
-colors = sv.ColorPalette.default()
+colors = sv.ColorPalette(colors=["red", "green", "blue", "yellow"])
 #colors = sv.Color.DEFAULT
 #############################################
 
@@ -41,22 +41,25 @@ camera_settings = {
         "cam_port": "/dev/camerazonea",
         "width": 4096,
         "height": 2160,
+        "polygon": [(4096, 0), (0, 0), (0, 2160), (4096, 2160)],
        # "polygon": [(1000, 0), (1000, 2160), (3000, 2160), (3000, 0)],
-        "polygon":[(355, 883), (341, 37), (721, 46), (745, 864)],
+        # "polygon":[(355, 883), (341, 37), (721, 46), (745, 864)],
     },
     "B": {
         "cam_port": "/dev/camerazoneb",
         "width": 1920,
         "height": 1080,
-        #"polygon": [(500, 0), (500, 1080), (1500, 1080), (1500, 0)],
-        "polygon":[(731, 45), (1194, 64), (1238, 888), (777, 862)],
+        "polygon": [(4096, 0), (0, 0), (0, 2160), (4096, 2160)],
+        # "polygon": [(500, 0), (500, 1080), (1500, 1080), (1500, 0)],
+         #"polygon":[(731, 45), (1194, 64), (1238, 888), (777, 862)],
     },
     "C": {
         "cam_port": "/dev/camerazonec",
         "width": 4096,
         "height": 2160,
-        #"polygon": [(1000, 0), (1000, 2160), (3000, 2160), (3000, 0)],
-        "polygon":[(1316, 903), (1302, 59), (1792, 54), (1804, 891)],
+        "polygon": [(4096, 0), (0, 0), (0, 2160), (4096, 2160)],
+        # "polygon": [(1000, 0), (1000, 2160), (3000, 2160), (3000, 0)],
+        # "polygon":[(1316, 903), (1302, 59), (1792, 54), (1804, 891)],
     }
 }
 
@@ -209,4 +212,5 @@ if __name__ == '__main__':
     print('Attempting to connect to the Socket.IO server')
     sio.connect('http://127.0.0.1', retry=True)
     print('Connected to the Socket.IO server')
+    count_people(1)
     sio.wait()

@@ -1,0 +1,20 @@
+[
+    {
+        "milliseconds": 4000,
+        "image": "instructie-1-vragen.jpg",
+        "text": {
+            "NL": "De robot stelt een vraag en geeft de mogelijke antwoorden",
+            "EN": "The robot asks a question and gives the possible answers",
+            "FR": "Le robot pose une question et donne les réponses possibles"
+        }
+    },
+    {
+        "milliseconds": 4930,
+        "image": "instruction-answers-fast.gif",
+        "text": {
+            "NL": "Antwoord door op zone A, B of C te staan en te kijken naar de robot",
+            "EN": "Answer by standing on zone A, B or C and looking at the robot",
+            "FR": "Répondez en vous tenant sur la zone A, B ou C et en regardant le robot"
+        }
+    }
+]
