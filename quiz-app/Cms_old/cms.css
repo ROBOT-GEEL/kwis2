@@ -209,7 +209,7 @@
     }
     .beamerPowerToggle{
         font-family: "CO Headline";
-        color: #f1f1f1;
+        color: var(--darkGreen);
         display: flex;
         flex-shrink: 0;
         font-size: 1.2rem;
