@@ -4,11 +4,44 @@ socket.on('connect', () => {
     console.log('Connected to socket.io server');
 });
 
+async function sendProjectorCommand(action) {
+  try {
+    const response = await fetch("/cms/toggleProjector", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ projectorState: action })
+    });
+
+    if (!response.ok) {
+      const error = await response.text();
+      throw new Error(error);
+    }
+
+    const text = await response.text();
+    console.log(text);
+  } catch (error) {
+    console.error("Error sending projector command:", error);
+  }
+}
+
+document.getElementById('sleepBtn').addEventListener('click', () => {
+    sendProjectorCommand('sleep');
+});
+
+document.getElementById('wakeBtn').addEventListener('click', () => {
+    sendProjectorCommand('wake');
+});
+
+
+
 socket.on('disconnect', () => {
     console.log('Disconnected from socket.io server');
 });
 
 socket.on('projector-update-question', (data) => {
+    // Wake projector
+    sendProjectorCommand('wake');
+
     document.querySelector('main').classList.remove('hidden');
     document.querySelector('#question').innerHTML = data.question;
     document.querySelectorAll('.answer-text').forEach((element, index) => {
@@ -69,6 +102,9 @@ socket.on('projector-clear-answers', () => {
 });
 
 socket.on('projector-reset', () => {
+    // Pur projector to sleep
+    sendProjectorCommand('sleep');
+
     document.querySelector('main').classList.add('hidden');
     document.querySelectorAll('.answer').forEach(e => e.classList.remove('correct-answer', 'wrong-answer'));
     document.querySelector('#question').innerHTML = '';

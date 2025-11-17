@@ -3,50 +3,48 @@ import crypto from "crypto";
 import { ObjectId } from "mongodb";
 
 export const toggleProjector = async (req, res, next) => {
-  console.log("Projector toggle requested, going to state:", req.body.projectorState);
+  let { projectorState } = req.body;
+  console.log("Projector toggle requested, state:", projectorState);
+
+  // Translate numeric state to command string
+  if (projectorState  == "on") {
+    const command = "PROJECTORON"
+  }
+  else if (projectorState = "off") {
+    const command = "PROJECTOROFF"
+  }
+  else if (projectorState = "sleep") {
+    const command = "PROJECTORSLEEP"
+  }
+  else if (projectorState = "wake") {
+    const command = "PROJECTORNOTSLEEP"
+  }
 
   const client = new net.Socket();
+  const RECEIVER_IP = process.env.PROJECTOR_RECEIVER_IP || "192.168.50.59"; // IP of the Pi running the Python listener
+  const RECEIVER_PORT = process.env.PROJECTOR_RECEIVER_PORT || 5050;        // Must match LISTEN_PORT in Python
 
-  client.connect(process.env.PJLINK_PORT, process.env.PROJECTOR_IP, function () {
-    console.log("Connected to projector");
+  client.connect(RECEIVER_PORT, RECEIVER_IP, () => {
+    console.log("Connected to projector receiver");
+    client.write(command + "\n"); // Send command
   });
 
-  client.on("error", function (err) {
+  client.on("data", (data) => {
+    console.log("Receiver response:", data.toString().trim());
+    res.status(200).send(`Command '${command}' sent successfully`);
+    client.destroy();
+  });
+
+  client.on("error", (err) => {
     console.error("Socket error:", err.message);
-    if (err.code === "ETIMEDOUT") {
-      res.status(500).send("PJ-Link client timeout");
-    } else {
-      res.status(500).send("Internal server error: " + err.message);
-    }
+    res.status(500).send("Error communicating with projector receiver: " + err.message);
   });
 
-  client.on("data", function (data) {
-    console.log("Received from projector: " + data);
-
-    if (data.toString().startsWith("PJLINK 1")) {
-      const salt = data.toString().replace("PJLINK 1 ", "").trim();
-
-      const hash = crypto.createHash("md5");
-      hash.update(salt + process.env.PJLINK_PASS, "utf-8");
-      const hashedPassword = hash.digest("hex");
-
-      // Send power command
-      const command = `${hashedPassword}%1POWR ${req.body.projectorState}\r`;
-      client.write(command);
-}     else if (data.toString().startsWith("PJLINK 0")) {
-      // Handle without authentication
-      const command = `%1POWR ${req.body.projectorState}\r`;
-      client.write(command);
-}
-
-      // Wait a bit to ensure command is sent before closing
-      setTimeout(() => client.destroy(), 200);
-  });
-
-  client.on("close", function () {
-    console.log("Connection closed");
+  client.on("close", () => {
+    console.log("Connection to projector receiver closed");
   });
 };
+
 
 export const delQuestion = async (req, res, next) => {
   try {
