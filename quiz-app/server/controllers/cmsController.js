@@ -7,21 +7,23 @@ export const toggleProjector = async (req, res, next) => {
   console.log("Projector toggle requested, state:", projectorState);
 
   // Translate numeric state to command string
-  if (projectorState  == "on") {
-    const command = "PROJECTORON"
+
+  let command;
+  if (projectorState  == "1") {
+    command = "PROJECTORON"
   }
-  else if (projectorState = "off") {
-    const command = "PROJECTOROFF"
+  else if (projectorState == "0") {
+    command = "PROJECTOROFF"
   }
-  else if (projectorState = "sleep") {
-    const command = "PROJECTORSLEEP"
+  else if (projectorState == "sleep") {
+    command = "PROJECTORSLEEP"
   }
-  else if (projectorState = "wake") {
-    const command = "PROJECTORNOTSLEEP"
+  else if (projectorState == "wake") {
+    command = "PROJECTORNOTSLEEP"
   }
 
   const client = new net.Socket();
-  const RECEIVER_IP = process.env.PROJECTOR_RECEIVER_IP || "192.168.50.59"; // IP of the Pi running the Python listener
+  const RECEIVER_IP = process.env.PROJECTOR_RECEIVER_IP || "192.168.50.77"; // IP of the Pi running the Python listener
   const RECEIVER_PORT = process.env.PROJECTOR_RECEIVER_PORT || 5050;        // Must match LISTEN_PORT in Python
 
   client.connect(RECEIVER_PORT, RECEIVER_IP, () => {

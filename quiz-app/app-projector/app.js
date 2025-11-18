@@ -1,8 +1,13 @@
-const socket = io(`ws://${window.location.hostname}`);
+// Store references to elements once.
+const mainElement = document.querySelector('main');
+const questionElement = document.querySelector('#question');
+const answerTextElements = document.querySelectorAll('.answer-text');
+const answerElements = document.querySelectorAll('.answer');
+const timerSpanElement = document.querySelector('#timer span');
+const timerProgressElement = document.querySelector('#timer progress');
 
-socket.on('connect', () => {
-    console.log('Connected to socket.io server');
-});
+// io() connects to the host that served the page (works with http/https and ports).
+const socket = io();
 
 async function sendProjectorCommand(action) {
   try {
@@ -24,90 +29,130 @@ async function sendProjectorCommand(action) {
   }
 }
 
-document.getElementById('sleepBtn').addEventListener('click', () => {
-    sendProjectorCommand('sleep');
+sendProjectorCommand("sleep")
+
+
+// Global timer variable
+let countdownInterval = null;
+
+/**
+ * Constant for textFit options.
+ */
+const textFitOptions = {
+    multiLine: true,
+    reProcess: true,
+    alignHoriz: true,
+    alignVert: true
+};
+
+/**
+ * Helper function to remove 'correct'/'wrong' classes from all answers.
+ */
+const clearAnswerClasses = () => {
+    answerElements.forEach(e => e.classList.remove('correct-answer', 'wrong-answer'));
+};
+
+/**
+ * Creates and returns the function that updates the timer UI.
+ * This avoids repetitive code in the countdown handler.
+ */
+const createTimerUpdater = (startTimestamp, answerTime) => {
+    return () => {
+        const elapsed = (Date.now() - startTimestamp) / 1000;
+        let remainingTime = answerTime - elapsed;
+
+        if (remainingTime <= 0) {
+            remainingTime = 0;
+            clearInterval(countdownInterval); // Stop the timer
+        }
+
+        timerSpanElement.textContent = `${Math.ceil(remainingTime)}s`;
+
+        // Calculate percentage and clamp it between 0 and 100
+        const percentage = Math.max(0, Math.min(100, (remainingTime / answerTime) * 100));
+        timerProgressElement.value = percentage; // .value is more efficient than setAttribute
+    };
+};
+
+// --- Socket.io Event Listeners ---
+
+socket.on('connect', () => {
+    console.log('Connected to socket.io server');
 });
-
-document.getElementById('wakeBtn').addEventListener('click', () => {
-    sendProjectorCommand('wake');
-});
-
-
 
 socket.on('disconnect', () => {
     console.log('Disconnected from socket.io server');
+    // Ensure the timer stops on disconnect
+    clearInterval(countdownInterval);
 });
 
 socket.on('projector-update-question', (data) => {
-    // Wake projector
-    sendProjectorCommand('wake');
+    sendProjectorCommand("wake")
+    mainElement.classList.remove('hidden');
+    questionElement.innerHTML = data.question;
 
-    document.querySelector('main').classList.remove('hidden');
-    document.querySelector('#question').innerHTML = data.question;
-    document.querySelectorAll('.answer-text').forEach((element, index) => {
+    answerTextElements.forEach((element, index) => {
         element.innerHTML = data.answers[index];
     });
 
-    textFit(document.querySelector('#question'),
-        {
-            multiLine: true,
-            reProcess: true,
-            alignHoriz: true,
-            alignVert: true
-        }
-    );
-
-    textFit(document.querySelectorAll('.answer-text'),
-        {
-            multiLine: true,
-            reProcess: true,
-            alignHoriz: true,
-            alignVert: true
-        }
-    );
+    // Use the cached elements and reusable options
+    textFit(questionElement, textFitOptions);
+    textFit(answerTextElements, textFitOptions);
 });
 
 socket.on('projector-start-countdown', (data) => {
-    const startTimestamp = data.startTimestamp;
+    // Always clear any existing timer
+    clearInterval(countdownInterval);
+
+    const { startTimestamp, answerTime } = data; // ES6 destructuring
+
+    // Create the specific update function for this countdown
+    const updateTimerDisplay = createTimerUpdater(startTimestamp, answerTime);
+
+    // Run once immediately to show the initial time
+    updateTimerDisplay();
+
+    // Calculate the delay until the *next* full second
     const offset = Date.now() - startTimestamp;
-    const answerTime = data.answerTime;
-    let remainingTime = answerTime - (Date.now() - startTimestamp) / 1000;
+    const firstTickDelay = 1000 - (offset % 1000);
 
-    document.querySelector('#timer span').textContent = `${Math.ceil(remainingTime)}s`;
-    document.querySelector('#timer progress').setAttribute('value', Math.floor(remainingTime * 100 / answerTime));
-
+    // Use setTimeout to *start* the setInterval on the next full second.
+    // This maintains the smart synchronization logic from your original code.
     setTimeout(() => {
-        remainingTime = answerTime - (Date.now() - startTimestamp) / 1000;
-        document.querySelector('#timer span').textContent = `${Math.ceil(remainingTime)}s`;
-        document.querySelector('#timer progress').setAttribute('value', Math.floor(remainingTime * 100 / answerTime));
-        const interval = setInterval(() => {
-            remainingTime = answerTime - (Date.now() - startTimestamp) / 1000;
-            document.querySelector('#timer span').textContent = `${Math.ceil(remainingTime)}s`;
-            document.querySelector('#timer progress').setAttribute('value', Math.floor(remainingTime * 100 / answerTime));
-            if (remainingTime <= 0) {
-                clearInterval(interval);
-            }
-        }, 1000);
-    }, 1000 - (offset % 1000));
+        updateTimerDisplay(); // First "clean" tick
+        // Store the ID in the *global* variable
+        countdownInterval = setInterval(updateTimerDisplay, 1000);
+    }, firstTickDelay);
 });
 
 socket.on('projector-display-answers', (data) => {
-    document.querySelector(`#answer-${data.answer}`).classList.add('correct-answer');
-    // Add wrong-answer class to all other answers
-    document.querySelectorAll(`.answer:not(#answer-${data.answer})`).forEach(e => e.classList.add('wrong-answer'));
+    // Use the cached elements
+    const correctAnswerId = `answer-${data.answer}`;
+
+    answerElements.forEach(el => {
+        if (el.id === correctAnswerId) {
+            el.classList.add('correct-answer');
+        } else {
+            el.classList.add('wrong-answer');
+        }
+    });
 });
 
 socket.on('projector-clear-answers', () => {
-    document.querySelectorAll('.answer').forEach(e => e.classList.remove('correct-answer', 'wrong-answer'));
+    clearAnswerClasses();
 });
 
 socket.on('projector-reset', () => {
-    // Pur projector to sleep
     sendProjectorCommand('sleep');
+    mainElement.classList.add('hidden');
+    clearAnswerClasses();
 
-    document.querySelector('main').classList.add('hidden');
-    document.querySelectorAll('.answer').forEach(e => e.classList.remove('correct-answer', 'wrong-answer'));
-    document.querySelector('#question').innerHTML = '';
-    document.querySelectorAll('.answer-text').forEach(e => e.innerHTML = '');
-    document.querySelector('#timer span').textContent = '';
+    questionElement.innerHTML = '';
+    answerTextElements.forEach(e => e.innerHTML = '');
+
+    timerSpanElement.textContent = '';
+    timerProgressElement.value = 0;
+
+    // Stop the timer on reset
+    clearInterval(countdownInterval);
 });

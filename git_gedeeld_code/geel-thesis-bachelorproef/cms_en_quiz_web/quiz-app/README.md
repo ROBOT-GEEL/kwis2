@@ -1,1 +1,0 @@
-# BP-Tabloo-Quiz-App

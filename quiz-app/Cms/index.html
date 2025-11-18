@@ -50,11 +50,11 @@
         <div class="beamerPowerToggle">Beamer</div>
         <div class="beamerPowerToggleDivOff">
             <button id="beamerPowerToggleOff" class="beamerPowerToggleOff" type="button"
-                onclick="toggleProjector('off')">Off</button>
+                onclick="toggleProjector('0')">Off</button>
         </div>
         <div class="beamerPowerToggleDivOn">
             <button id="beamerPowerToggleOn" class="beamerPowerToggleOn" type="button"
-                onclick="toggleProjector('on')">On</button>
+                onclick="toggleProjector('1')">On</button>
         </div>
         <!-- <div class="BackButtonDiv"> -->
             <button id="backButton" type="button" onclick="location.href='../grafieken'">Ga naar dashboard</button>
@@ -109,7 +109,12 @@
         </div>
     </div>
     </div>
-    <script src="cms.js"></script>
-</body>
+    <script src="js/common.js"></script>
 
+    <script src="js/questions.js"></script>
+    <script src="js/enable.js"></script>
+    <script src="js/visited.js"></script>
+
+    <script src="js/main.js"></script>
+</body>
 </html>
