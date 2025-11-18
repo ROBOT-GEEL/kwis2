@@ -86,8 +86,12 @@ socket.on('disconnect', () => {
     clearInterval(countdownInterval);
 });
 
+socket.on('projector-wake', () => {
+    sendProjectorCommand('wake')
+});
+
+
 socket.on('projector-update-question', (data) => {
-    sendProjectorCommand("wake")
     mainElement.classList.remove('hidden');
     questionElement.innerHTML = data.question;
 

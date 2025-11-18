@@ -208,7 +208,7 @@ class Quiz {
             await wait(100);
         }
 
-        socket.emit('projector-reset');
+        socket.emit('projector-wake');
         // Reset the cancelled flag
         this.#cancelled = false;
 
